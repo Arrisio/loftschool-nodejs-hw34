@@ -3,9 +3,6 @@ const db = require('../models/db');
 
 
 module.exports.get = (req, res) => {
-    // req.session.isAdmin
-    //     ? res.redirect('/')
-    //     : res.render('pages/login', { title: 'Login' });
     res.render('pages/login', {title: 'Login'});
 };
 

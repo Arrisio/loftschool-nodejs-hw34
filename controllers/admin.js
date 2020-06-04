@@ -6,9 +6,6 @@ const db = require('../models/db');
 
 
 module.exports.get = (req, res) => {
-    // req.session.isAdmin
-    //     ? res.redirect('/')
-    //     : res.render('pages/login', { title: 'Login' });
     res.render('pages/admin', {title: 'Admin'});
 };
 
@@ -20,7 +17,6 @@ module.exports.addSkill = (req, res, next) => {
             return next(err)
         }
         console.log(`add skill : ${fields.name}`)
-        //
         db.get('skills')
             .push({age: fields.age, concerts: fields.concerts, cities: fields.cities, years: fields.years})
             .write();

@@ -3,7 +3,10 @@ const db = require('../models/db');
 
 
 module.exports.get = (req, res) => {
-    res.render('pages/index');
+    res.render('pages/index', {
+        title: 'Домашняя страница',
+        msgemail: req.flash('msgemail')[0],
+    });
 }
 
 module.exports.sendMessage = (req, res, next) => {
@@ -18,6 +21,7 @@ module.exports.sendMessage = (req, res, next) => {
             .push({name: fields.name, email: fields.email, message: fields.message})
             .write();
 
+            req.flash('msgemail', 'Сообщение отправлено');
+            res.redirect(`/`);
     })
-        res.redirect(`/?msgsemail=Сообщение отправлено.`);
 }

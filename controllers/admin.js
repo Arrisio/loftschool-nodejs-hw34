@@ -6,7 +6,12 @@ const db = require('../models/db');
 
 
 module.exports.get = (req, res) => {
-    res.render('pages/admin', {title: 'Admin'});
+    res.render(
+        'pages/admin', {
+            title: 'Admin',
+            msgskill: req.flash('msgskill')[0],
+            msgfile: req.flash('msgfile')[0],
+        });
 };
 
 module.exports.addSkill = (req, res, next) => {
@@ -20,8 +25,9 @@ module.exports.addSkill = (req, res, next) => {
         db.get('skills')
             .push({age: fields.age, concerts: fields.concerts, cities: fields.cities, years: fields.years})
             .write();
+        req.flash('msgskill', 'Данные сохранены!');
+        res.redirect(`/admin`);
     })
-    res.redirect(`/admin?msg=скил добавлен`);
 }
 
 module.exports.addProcuct = (req, res, next) => {
@@ -33,10 +39,11 @@ module.exports.addProcuct = (req, res, next) => {
             return next(err)
         }
         console.log(`add procuct : ${fields.name}`)
-        //
         db.get('products')
             .push({photo: files.photo.path, name: fields.name, price: fields.price})
             .write();
+
+        req.flash('msgfile', 'Товар добавлен!');
+        res.redirect(`/admin`);
     })
-    res.redirect(`/admin?msg=продукт добавлен`);
 }
